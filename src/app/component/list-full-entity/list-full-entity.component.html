@@ -1,0 +1,9 @@
+<nav *ngIf="isAuthenticatedObs | async">
+  <br>
+  <div class="container-fluid">
+    <b>logged as:</b>{{profile_username}}
+    <button (click)="onLogout()" class="btn btn-primary" type="submit" >logout</button>
+  </div>
+  <a *ngFor="let entity of fullEntityList" routerLink="object/{{entity}}" routerLinkActive="active" class="btn btn-secondary">{{entity}}</a>
+</nav>
+

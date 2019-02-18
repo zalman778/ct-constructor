@@ -1,0 +1,22 @@
+<div class="container-fluid">
+  <form [formGroup]="objectForm">
+    <div *ngFor="let fieldName of getKeys1(objectFormMap)" class="form-group">
+      <label>{{fieldName}}</label>
+
+      <div [ngSwitch]="objectFormMap.get(fieldName)">
+        <div *ngSwitchCase="'ref'">
+          <select formControlName="{{fieldName}}" class="form-control">
+            <option *ngFor="let optionName of getKeys2(additionalOptionsMap, fieldName)" value="{{optionName}}">
+              {{additionalOptionsMap.get(fieldName).get(optionName)}}
+            </option>
+          </select>
+        </div>
+        <div *ngSwitchDefault>
+          <input formControlName="{{fieldName}}" type="text" class="form-control">
+        </div>
+      </div>
+    </div>
+    <button (click)="onSubmit()" class="btn btn-primary" type="submit" >save</button>
+  </form>
+  {{objectForm.getRawValue() | json}}
+</div>
