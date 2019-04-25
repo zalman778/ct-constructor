@@ -3,6 +3,10 @@ import {ApiService} from '../../service/api.service';
 import {Router} from '@angular/router';
 import {BehaviorSubject, Observable} from 'rxjs';
 
+/*
+  Компонент списка всех сущностей - верхняя менюшка.
+  получает список через _apiService.getFullEntityList()
+ */
 @Component({
   selector: 'app-list-full-entity',
   templateUrl: './list-full-entity.component.html',
@@ -38,11 +42,11 @@ export class ListFullEntityComponent implements OnInit {
 
     if ( jsonUserConfig === null) {
       // logged in so return true
-      console.log("user logged out");
+      //console.log("user logged out");
       this._isAuthenticatedSubject.next(false);
       return false;
     } else {
-      console.log("user logged in");
+      //console.log("user logged in");
       this._isAuthenticatedSubject.next(true);
     }
 

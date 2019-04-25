@@ -7,6 +7,10 @@ import { IResponse} from '../model/response.model';
 import 'rxjs/add/operator/map';
 import 'rxjs-compat/add/operator/catch';
 
+/*
+  Сервис взаимодействия с сервером компании Company Server (CS).
+  Основные запросы на взаимодействие с объектами сущностей.
+ */
 @Injectable({
   providedIn: 'root'
 })

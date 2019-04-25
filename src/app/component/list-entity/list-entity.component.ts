@@ -1,8 +1,13 @@
-import {Component, OnInit, NgZone} from '@angular/core';
+import {Component, NgZone, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {ApiService} from '../../service/api.service';
-import {element} from 'protractor';
 
+/*
+  Компонент отображения списка объектов сущности.
+  Получает список объектов через _apiService.getObjectsList
+
+  Удаляет сущности по _apiService.deleteObjectById.
+ */
 @Component({
   selector: 'app-list-entity',
   templateUrl: './list-entity.component.html',

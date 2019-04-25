@@ -19,6 +19,9 @@ const routes: Routes = [
   { path: '**',   component: PageNotFoundComponent }
 
 ];
+/*
+  Компонент навишации
+ */
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]

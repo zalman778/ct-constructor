@@ -1,10 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, NgZone, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {ApiService} from '../../service/api.service';
 import {AbstractControl, FormControl, FormGroup} from '@angular/forms';
-import { NgZone } from '@angular/core';
-import { IResponse } from '../../model/response.model';
 
+/*
+  Компонент создания сущности.
+  Получает структуру сущности через apiService.getEntityFormFields
+  По каждому полю сущности генерит поля формы.
+  Если поле сущности - ссылка на другую сущность, то получаем список вариантов: _apiService.getEntityTitleList
+
+
+  Сохраняет сущность через _apiService.saveObject
+ */
 @Component({
   selector: 'app-add-entity',
   templateUrl: './add-entity.component.html',
@@ -64,18 +71,22 @@ export class AddEntityComponent implements OnInit {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.entityName = params.get('entity_name');
 
+      //получаем стуктуру сущности от сервера:
       this._apiService.getEntityFormFields(this.entityName).subscribe(jsonObject => {
         let jsonObjectArray = jsonObject as any[];
         jsonObjectArray.sort(this.predicateBy('index'));
 
         let objectFormStruct : { [key: string]: AbstractControl} = {};
 
+        //для каждого поля определеяем видимость и тип
         jsonObjectArray.forEach(element => {
           if (element['b_show'] == 'true') {
             objectFormStruct[element['name']] = new FormControl();
 
 
             let fieldType = element['type'].split(':')[0];
+
+            //если тип - ссылка на другую сущность, то получаем список возможных вариантов для селекта
             if (fieldType == 'ref') {
               let refTable = element['type'].split(':')[1];
               //loading options
@@ -95,6 +106,7 @@ export class AddEntityComponent implements OnInit {
               });
               this.objectFormMap.set(element['name'], fieldType);
             } else {
+              //иначе просто создаем элемент формы
               this.objectFormMap.set(element['name'], element['type']);
             }
           }

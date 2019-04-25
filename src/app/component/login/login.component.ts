@@ -1,14 +1,15 @@
 import {Component, NgZone, OnInit} from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
-import { AuthenticationService } from '../../service/auth.service';
-import { AlertService } from '../../service/alert.service';
-import {HttpClient} from '@angular/common/http';
+import {AuthenticationService} from '../../service/auth.service';
+import {AlertService} from '../../service/alert.service';
 import {ApiService} from '../../service/api.service';
 import {ListFullEntityComponent} from '../list-full-entity/list-full-entity.component';
 
+/*
+  Компонент авторизации
+ */
 @Component({
   templateUrl: 'login.component.html'
  ,styleUrls: ['./login.component.scss']
@@ -31,7 +32,8 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    //redirect if logged
+
+    //если есть userConfig, значит уже авторизирован, перенаправляем
     if (localStorage.getItem('userConfig')) {
       this.ngZone.run(() => this.router.navigateByUrl('/objects/'));
     }
@@ -66,15 +68,16 @@ export class LoginComponent implements OnInit {
       "password": this.f.password.value
     };
 
+    //обращаемя к сервису авторизации
     this.authenticationService.login(loginObject)
 
       .subscribe(
         data => {
-          console.log(data);
 
-          //parsing iResponse
           if (data['status'] == 'OK') {
+            //получаем от сервера авторизации адрес сервера компании (company_db) и сохраняем его
             this.apiService.API_HOST = data['payload']['connection_url'];
+
             localStorage.setItem('userConfig', JSON.stringify(data['payload']));
 
             this.cmpListFullEntity.setAuthSubj(true);

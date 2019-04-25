@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {first, map} from 'rxjs/operators';
 import {IResponse} from '../model/response.model';
 import {Observable} from 'rxjs';
 
-
+/*
+  Сервис взаимодействия с сервером авторизации.
+ */
 @Injectable()
 export class AuthenticationService {
   API_HOST = 'http://localhost:8081';

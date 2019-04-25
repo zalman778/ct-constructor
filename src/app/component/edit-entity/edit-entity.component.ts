@@ -3,6 +3,12 @@ import {ApiService} from '../../service/api.service';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {AbstractControl, FormControl, FormGroup} from '@angular/forms';
 
+/*
+  Компонент редактирования сущности.
+  Получает структуру сущности со значениями через apiService.getEntityFormFieldsWithValues
+
+  Сохраняет изменения в _apiService.updateObject
+ */
 @Component({
   selector: 'app-edit-entity',
   templateUrl: './edit-entity.component.html',
